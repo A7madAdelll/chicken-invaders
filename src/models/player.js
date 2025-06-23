@@ -16,7 +16,7 @@ class Player {
   setbullettype(bullettype) {
     this._bullettype = bullettype;
     if (bullettype == "red") {
-      this._coolDown = 100;
+      this._coolDown = 200;
     }
     // her is will set the cooldown too ya rab ma ansa
   }

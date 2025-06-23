@@ -1,4 +1,5 @@
 "use client";
+import styles from "./gameplay.module.css";
 import { useEffect, useRef, useState } from "react";
 import { Player } from "@/models/player";
 // import { Enemy } from "@/models/enemy";
@@ -11,7 +12,8 @@ const Engine = () => {
   const engineRef = useRef({});
   const keysPressed = useRef({});
   const [playerState, setPlayerState] = useState({});
-  const [enemyState, setEnemyState] = useState([]);
+  const [chickensState, setChickensState] = useState([]);
+  const [eggsState, setEggsState] = useState([]);
   const [eggState, setEggState] = useState([]);
   const [bulletState, setBulletState] = useState([]);
 
@@ -19,17 +21,14 @@ const Engine = () => {
   useEffect(() => {
     const engine = new EnginController(1550, 730, {
       setPlayerState: setPlayerState,
-      setEnemyState: setEnemyState,
       setEggState: setEggState,
       setBulletState: setBulletState,
+      setChickensState: setChickensState,
+      setEggsState: setEggsState,
     });
     // playerRef.current = new Player(5, "red"); // x=100, y=100 as example
     engineRef.current = engine;
     engine.startGame();
-    setPlayerState({
-      x: engineRef.current.player._posX,
-      y: engineRef.current.player._posy,
-    });
 
     const handleKeyDown = (event) => {
       if (event.key === "p") {
@@ -82,54 +81,49 @@ const Engine = () => {
   }, [gamerunning]);
 
   return (
-    <div
-      style={{
-        backgroundImage: `url("/background.jpeg")`,
-        height: "730px",
-        width: "1550px",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
+    <div className={styles.container}>
       {/* Player */}
       <div
+        className={styles.player}
         style={{
-          position: "absolute",
           top: playerState.y,
           left: playerState.x,
-          width: "50px",
-          height: "50px",
-          // backgroundColor: "red",
-          overflow: "visible",
         }}
       >
         <Image
           height={100}
           width={100}
-          alt="spaveship"
+          alt="spaceship"
           src="/spaveship.png"
-          style={{ marginLeft: "-25px" }}
-        ></Image>
+          className={styles.spaceshipImage}
+        />
       </div>
-      {bulletState?.map((bullet, index) => {
-        return (
-          <div
-            key={index}
-            style={{
-              position: "absolute",
-              top: bullet.y,
-              left: bullet.x,
-              width: "10px",
-              height: "10px",
-              backgroundColor: "red",
-              overflow: "visible",
-            }}
-          ></div>
-        );
-      })}
+
+      {/* Bullets */}
+      {bulletState?.map((bullet, index) => (
+        <div
+          key={index}
+          className={styles.bullet}
+          style={{
+            top: bullet.y,
+            left: bullet.x,
+          }}
+        ></div>
+      ))}
+
+      {/* Chickens */}
+      {chickensState?.map((chicken, index) => (
+        <div
+          key={index}
+          className={styles.chicken}
+          style={{
+            top: chicken.y,
+            left: chicken.x,
+          }}
+        >
+          <Image src="/chicken.png" height={100} width={100}></Image>
+        </div>
+      ))}
     </div>
   );
 };
