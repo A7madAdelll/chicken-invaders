@@ -1,7 +1,7 @@
 import { Bullet, RedBullet } from "./bullet";
 class Player {
-  _posX = 100;
-  _posy = 100;
+  _posX = 600;
+  _posy = 500;
   _width = 50;
   _height = 50;
   _power = 1;

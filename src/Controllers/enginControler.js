@@ -1,8 +1,10 @@
 import { Player } from "../models/player";
 import { Enemy, Chicken } from "../models/enemy";
 import { Bullet } from "../models/bullet";
-import moveAllMovables from "./movingbulletsControl";
+import moveAllBullets from "./movingbulletsControl";
+import moveAllChickens from "./chickenFloatingControll";
 import { areRectanglesColliding } from "@/helper functions/checkRectanglesCollide";
+import { Level1 } from "@/models/subLevel";
 class EnginController {
   _screenWidth = 1550;
   _screenHeight = 730;
@@ -21,36 +23,23 @@ class EnginController {
   }
 
   calculateOneFrame(keysPressed) {
+    // console.log("calculate one frame");
+
     Object.keys(keysPressed.current).forEach((key) => {
       if (keysPressed.current[key]) {
         this.pressButton(key);
       }
     });
-    moveAllMovables(
+    moveAllBullets(
       this.bullets,
       this.stateObject.setBulletState,
       this.enemies.chickens,
       this.stateObject.setChickensState
     );
+    moveAllChickens(this.enemies.chickens, this.stateObject.setChickensState);
   }
 
   startGame() {
-    // thi start game should be done with another level engin to controll the levels lol
-
-    // set chicken
-
-    const chickensArray = [];
-
-    for (let i = 0; i < 10; i++) {
-      const x = 100 + i * 120; // spacing between chickens
-      const y = 100; // same Y for a horizontal row
-      const chicken = new Chicken(x, y);
-      this.enemies.chickens.push(chicken);
-      chickensArray.push({ x: chicken._posX, y: chicken._posy });
-    }
-
-    this.stateObject.setChickensState(chickensArray);
-
     //set player
     const player = new Player(5);
     player.setbullettype("red");
@@ -59,6 +48,37 @@ class EnginController {
       x: this.player._posX,
       y: this.player._posy,
     });
+
+    // thi start game should be done with another level engin to controll the levels lol
+
+    // set chicken
+
+    // const chickensArray = [];
+
+    // for (let i = 0; i < 10; i++) {
+    //   const x = 100 + i * 120; // spacing between chickens
+    //   const y = 100; // same Y for a horizontal row
+    //   const chicken = new Chicken(x, y);
+    //   this.enemies.chickens.push(chicken);
+    //   chickensArray.push({ x: chicken._posX, y: chicken._posy });
+    // }
+
+    const level1 = new Level1();
+    const chickensArray = level1.getLevel();
+    console.log("first chickens", chickensArray);
+
+    this.enemies.chickens = chickensArray;
+    const newChickensState = [];
+
+    for (let i = 0; i < chickensArray.length; i++) {
+      newChickensState.push({
+        x: chickensArray[i]._posX,
+        y: chickensArray[i]._posy,
+      });
+    }
+    console.log(newChickensState);
+
+    this.stateObject.setChickensState(newChickensState);
   }
   pressButton(character) {
     if (character == " ") {

@@ -75,11 +75,8 @@ function checkifBulletHitChicken(
       chickens[j]._posy + chickens[j]._height,
     ];
     let rect2 = [x, y, x + bullets[i]._width, y + bullets[i]._height];
-    console.log(rect1, rect2, j);
 
     if (areRectanglesColliding(rect1, rect2)) {
-      console.log(j);
-
       return { didBulletHitChicken: true, j: j };
     }
   }
