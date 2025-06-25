@@ -13,6 +13,7 @@ class Level1 extends Sublevel {
       const y = 100; // same Y for a horizontal row
       const chicken = new Chicken(x, y);
       console.log("chicken", chicken);
+      chicken.setEntrance();
 
       this.chickens.push(chicken);
       chickensArray.push({ x: chicken._posX, y: chicken._posy });

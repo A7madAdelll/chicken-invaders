@@ -1,5 +1,8 @@
+import { secDegEq } from "../helper functions/secDegEq";
 class Enemy {
   _entringphase;
+  _firstPosX;
+  _firstPosY;
   _posX = 500;
   _posy = 0;
   _width;
@@ -7,20 +10,36 @@ class Enemy {
   _killable;
   _health;
   _speed;
+  _enterfromright = true;
 
-  _EntranceMovement = () => {};
+  _xenter;
+  _yenter;
+
+  setEntrance() {
+    console.log("lool");
+  }
   constructor(_posX, _posy, _width, _height, _killable, _health, speed) {
     this._posX = _posX;
     this._posy = _posy;
+    this._firstPosX = _posX;
+    this._firstPosY = _posy;
     this._width = _width;
     this._height = _height;
     this._killable = _killable;
     this._health = _health;
     this._entringphase = true;
     this._speed = speed;
+
+    this._enterfromright = Math.random() > 0.5;
+    if (this._enterfromright) {
+      this._xenter = 50;
+    } else {
+      this._xenter = -50;
+    }
+    this._yenter = secDegEq(this._xenter);
   }
 
-  move() {}
+  chickenfloat() {}
   die() {
     console.log("chicken died");
     // clearInterval(this._moveScriptInterval);
@@ -33,7 +52,7 @@ class Chicken extends Enemy {
   _backing = false;
   _maxFloatingDioration = 30;
   constructor(_posX, _posy) {
-    super(_posX, _posy, 100, 100, true, 10, 0.2);
+    super(_posX, _posy, 100, 100, true, 4, 0.2);
     this._floatingDirection = Math.floor(Math.random() * 2) * 2 - 1;
     if (this._floatingDirection == 1) {
       this._maxFloatingDioration = Math.floor(
@@ -47,8 +66,41 @@ class Chicken extends Enemy {
 
     this._floatingDioration = 0;
   }
+  move() {
+    if (this._entringphase) {
+      console.log("animation", this._posX, this._posy);
 
-  move = () => {
+      if (this._enterfromright) {
+        this._xenter--;
+        this._yenter = secDegEq(this._xenter);
+
+        this._posX = this._firstPosX + this._xenter;
+        this._posy = this._firstPosY + this._yenter;
+
+        if (this._posX - this._firstPosX <= 0) {
+          this._posX = this._firstPosX;
+          this._posy = this._firstPosY;
+          this._entringphase = false;
+        }
+      } else {
+        this._xenter++;
+        this._yenter = secDegEq(this._xenter);
+
+        this._posX = this._firstPosX + this._xenter;
+        this._posy = this._firstPosY + this._yenter;
+
+        if (this._posX - this._firstPosX >= 0) {
+          this._posX = this._firstPosX;
+          this._posy = this._firstPosY;
+          this._entringphase = false;
+        }
+      }
+    } else {
+      this.chickenfloat();
+    }
+  }
+  chickenfloat = () => {
+    if (this._entringphase) return;
     if (this._backing) {
       this._posX += this._speed * this._floatingDirection;
       if (this._floatingDirection == 1) {
@@ -63,6 +115,7 @@ class Chicken extends Enemy {
         this._maxFloatingDioration = Math.floor(
           Math.floor(Math.random() * -100) - 40
         );
+        this._posX = this._firstPosX;
       }
     } else {
       this._posX += this._speed * this._floatingDirection;
@@ -94,8 +147,17 @@ class Chicken extends Enemy {
       return false;
     }
   }
-  setEntranceMovement(_EntranceMovement) {
-    this._EntranceMovement = _EntranceMovement;
+  setEntrance() {
+    console.log("entrance");
+
+    if (this._enterfromright) {
+      this._posX = this._firstPosX + this._xenter;
+      this._posy = this._firstPosY + this._yenter;
+    } else {
+      this._posX = this._firstPosX - this._xenter;
+      this._posy = this._firstPosY + this._yenter;
+    }
+    console.log("entrance", this._posX, this._posy);
   }
 }
 

@@ -49,20 +49,7 @@ class EnginController {
       y: this.player._posy,
     });
 
-    // thi start game should be done with another level engin to controll the levels lol
-
-    // set chicken
-
-    // const chickensArray = [];
-
-    // for (let i = 0; i < 10; i++) {
-    //   const x = 100 + i * 120; // spacing between chickens
-    //   const y = 100; // same Y for a horizontal row
-    //   const chicken = new Chicken(x, y);
-    //   this.enemies.chickens.push(chicken);
-    //   chickensArray.push({ x: chicken._posX, y: chicken._posy });
-    // }
-
+    //set level 1
     const level1 = new Level1();
     const chickensArray = level1.getLevel();
     console.log("first chickens", chickensArray);
