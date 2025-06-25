@@ -39,25 +39,25 @@ class Player {
   rocket() {}
 
   move(character) {
-    if (character == "a") {
+    if (character == "a" || character == "ش") {
       this._posX -= this._speed;
       if (this._posX < 0) {
         this._posX = 0;
       }
     }
-    if (character == "d") {
+    if (character == "d" || character == "ي") {
       this._posX += this._speed;
       if (this._posX > 1500) {
         this._posX = 1500;
       }
     }
-    if (character == "w") {
+    if (character == "w" || character == "ص") {
       this._posy -= this._speed;
       if (this._posy < 0) {
         this._posy = 0;
       }
     }
-    if (character == "s") {
+    if (character == "s" || character == "س") {
       this._posy += this._speed;
       if (this._posy > 680) {
         this._posy = 680;

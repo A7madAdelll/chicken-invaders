@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Player } from "@/models/player";
 // import { Enemy } from "@/models/enemy";
 import { RedBullet } from "@/models/bullet";
-import { EnginController } from "@/models/enginControler";
+import { EnginController } from "@/Controllers/enginControler";
 import Image from "next/image";
 const Engine = () => {
   // const playerRef = useRef({});
@@ -54,6 +54,8 @@ const Engine = () => {
     };
   }, []);
 
+  // useEffect(() => {
+  // }, [bulletState]);
   // Game Loop with requestAnimationFrame
   useEffect(() => {
     let frameId;
@@ -61,14 +63,8 @@ const Engine = () => {
     const update = () => {
       if (gamerunning == false) return;
       if (!engineRef.current) return;
-      //when key pressed engine controller will be called
-      Object.keys(keysPressed.current).forEach((key) => {
-        if (keysPressed.current[key]) {
-          engineRef.current.pressButton(key);
-        }
-      });
 
-      engineRef.current.moveAllMovables();
+      engineRef.current.calculateOneFrame(keysPressed);
 
       frameId = requestAnimationFrame(update);
     };
@@ -121,7 +117,12 @@ const Engine = () => {
             left: chicken.x,
           }}
         >
-          <Image src="/chicken.png" height={100} width={100}></Image>
+          <Image
+            src="/chicken.png"
+            alt="chicken"
+            height={100}
+            width={100}
+          ></Image>
         </div>
       ))}
     </div>

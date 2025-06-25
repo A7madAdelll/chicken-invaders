@@ -5,7 +5,8 @@ class Enemy {
   _height;
   _killable;
   _health;
-  _moveScriptInterval;
+
+  _EntranceMovement = () => {};
   constructor(_posX, _posy, _width, _height, _killable, _health) {
     this._posX = _posX;
     this._posy = _posy;
@@ -14,11 +15,10 @@ class Enemy {
     this._killable = _killable;
     this._health = _health;
   }
-  // moveScript() {
-  //   this._moveScriptInterval = setInterval(() => {
-  //     this.move();
-  //   }, 1000);
-  // }
+  setEntranceMovement(_EntranceMovement) {
+    this._EntranceMovement = _EntranceMovement;
+  }
+
   move() {}
   die() {
     console.log("chicken died");
