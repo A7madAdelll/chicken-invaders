@@ -29,7 +29,7 @@ function moveAllBullets(bullets, setBulletState, chickens, setChickensState) {
       newbulletState
     );
     if (didBulletHitChicken) {
-      console.log("bullet hit chicken");
+      // console.log("bullet hit chicken");
 
       const isitdead = chickens[j].gothit(bullets[i]._damage);
       if (isitdead) {

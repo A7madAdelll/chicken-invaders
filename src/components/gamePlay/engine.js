@@ -64,8 +64,8 @@ const Engine = () => {
       if (gamerunning == false) return;
       if (!engineRef.current) return;
 
-      engineRef.current.calculateOneFrame(keysPressed);
-
+      const gamewon = engineRef.current.calculateOneFrame(keysPressed);
+      if (gamewon == false) return;
       frameId = requestAnimationFrame(update);
     };
     if (gamerunning != false) {
@@ -79,21 +79,37 @@ const Engine = () => {
   return (
     <div className={styles.container}>
       {/* Player */}
-      <div
-        className={styles.player}
-        style={{
-          top: playerState.y,
-          left: playerState.x,
-        }}
-      >
-        <Image
-          height={100}
-          width={100}
-          alt="spaceship"
-          src="/spaveship.png"
-          className={styles.spaceshipImage}
-        />
-      </div>
+
+      {playerState.x != undefined ? (
+        <div
+          className={styles.player}
+          style={{
+            top: playerState.y,
+            left: playerState.x,
+          }}
+        >
+          <Image
+            height={100}
+            width={100}
+            alt="spaceship"
+            src="/spaveship.png"
+            className={styles.spaceshipImage}
+          />
+        </div>
+      ) : (
+        <div
+          style={{
+            position: "absolute",
+            top: 300,
+            left: 600,
+            textAlign: "center",
+            color: "red",
+            fontSize: "50px",
+          }}
+        >
+          you are dead
+        </div>
+      )}
 
       {/* Bullets */}
       {bulletState?.map((bullet, index) => (
@@ -104,9 +120,25 @@ const Engine = () => {
             top: bullet.y,
             left: bullet.x,
           }}
-        ></div>
+        >
+          {/* <Image src="/bullet.png" alt="egg" height={40} width={40}></Image> */}
+        </div>
       ))}
-
+      {/* eggs */}
+      {eggState?.map((egg, index) => (
+        <div
+          key={index}
+          style={{
+            top: egg.y,
+            left: egg.x,
+            position: "absolute",
+            width: 20,
+            height: 20,
+          }}
+        >
+          <Image src="/egg.png" alt="egg" height={30} width={20}></Image>
+        </div>
+      ))}
       {/* Chickens */}
       {chickensState?.map((chicken, index) => (
         <div

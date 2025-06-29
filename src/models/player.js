@@ -9,7 +9,8 @@ class Player {
   _lastshot = 0;
   _speed;
   _bullettype;
-  _coolDown = 1000;
+  _coolDown = 500;
+  _alive = true;
   constructor(speed) {
     this._speed = speed;
   }
@@ -65,6 +66,10 @@ class Player {
     }
   }
 
-  die() {}
+  die() {
+    console.log("die");
+
+    return true;
+  }
 }
 export { Player };

@@ -5,7 +5,6 @@ class Bullet {
   _height;
   _damage;
   _speed;
-  _cookDown;
   constructor(_posX, _posy, _width, _height, _damage, _speed, _coolDown) {
     this._posX = _posX;
     this._posy = _posy;
@@ -14,25 +13,6 @@ class Bullet {
     this._damage = _damage;
     this._speed = _speed;
     this._coolDown = _coolDown;
-  }
-
-  get posX() {
-    return this._posX;
-  }
-  get posY() {
-    return this._posy;
-  }
-  get width() {
-    return this._width;
-  }
-  get height() {
-    return this._height;
-  }
-  get damage() {
-    return this._damage;
-  }
-  get speed() {
-    return this._speed;
   }
 
   move() {}
@@ -44,7 +24,7 @@ class RedBullet extends Bullet {
   _slope;
 
   constructor(_posX, _posy, slope) {
-    super(_posX, _posy, 10, 20, 1, 1, 50);
+    super(_posX, _posy, 10, 20, 1, 3, 50);
     this._slope = slope * (Math.PI / 180);
   }
 
